@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Round 2{% endblock %}
+{% block content %}
+<h1 class="section-title mb-2">Round 2 · Advance One Solution</h1>
+<p class="text-muted mb-4">Select your strongest idea (or another) and prepare a crisp 1-minute presentation. Paste the Google Slides (or equivalent) URL below.</p>
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label fw-medium">Solution Name</label>
+        <input type="text" name="name" class="form-control form-control-lg" placeholder="e.g. AeroGuard AI — Hydrogen Fleet Guardian" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-medium">Presentation URL</label>
+        <input type="url" name="slides_url" class="form-control" placeholder="https://docs.google.com/presentation/d/..." required>
+        <div class="form-text">Make it visual and punchy. The class will evaluate these advanced solutions.</div>
+      </div>
+      <button type="submit" class="btn btn-warning btn-lg w-100">Submit to Round 2</button>
+    </form>
+  </div>
+</div>
+{% if my_r1 %}
+<h6 class="text-muted mb-2">Your Round 1 ideas (for reference)</h6>
+<ul class="list-group list-group-flush">
+  {% for idea in my_r1[:6] %}
+  <li class="list-group-item px-0 small">
+    <strong>{{ idea.name }}</strong>
+    <span class="text-muted"> — {{ idea.description[:70] }}{% if idea.description|length > 70 %}…{% endif %}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
