@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Join{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card p-4">
+      <h2 class="section-title mb-1">Join the Tournament</h2>
+      <p class="text-muted small mb-4">Create your account with the tournament code provided by your instructor.</p>
+      <form method="post">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" placeholder="yourname_mba" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password (min 6 characters)</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Tournament Code</label>
+          <input type="text" name="tournament_code" class="form-control" value="{{ tournament.code if tournament else '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Create Account</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="{{ url_for('login') }}" class="small">Already have an account? Sign in</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
