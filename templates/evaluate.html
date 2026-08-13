@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Evaluate{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <div>
+    <h1 class="section-title mb-1">Evaluate Ideas · Round {{ round_num }}</h1>
+    <p class="text-muted mb-0">Rate carefully. Your discernment helps surface the exceptional few.</p>
+  </div>
+  <div class="text-end">
+    <div class="stat">{{ my_count }}</div>
+    <div class="small text-muted">of {{ total }} rated</div>
+  </div>
+</div>
+{% if unrated %}
+<form method="post">
+  {% for idea in unrated %}
+  <div class="card idea-card mb-3">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-7">
+          <h5 class="mb-1">{{ idea.name }}</h5>
+          <p class="text-muted mb-0">{{ idea.description }}</p>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label small fw-medium">Your rating (0–10)</label>
+          <select name="rating_{{ idea.id }}" class="form-select form-select-lg mb-2" required>
+            <option value="">Select…</option>
+            {% for r in range(0, 11) %}
+            <option value="{{ r }}">{{ r }}{% if r >= 9 %} · Exceptional{% elif r >= 7 %} · Strong{% elif r >= 5 %} · Average{% else %} · Weak{% endif %}</option>
+            {% endfor %}
+          </select>
+          <input type="text" name="comment_{{ idea.id }}" class="form-control form-control-sm" placeholder="Optional comment">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary btn-lg w-100">Submit Ratings</button>
+  <p class="text-center small text-muted mt-2">You can return later to rate more. Every careful rating improves selection quality.</p>
+</form>
+{% else %}
+<div class="alert alert-success">
+  You have rated all available ideas in this round. Thank you for your discernment.
+</div>
+<a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+{% endif %}
+{% endblock %}
