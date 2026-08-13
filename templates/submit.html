@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Submit Ideas{% endblock %}
+{% block content %}
+<h1 class="section-title mb-2">Round 1 · Submit Ideas</h1>
+<p class="text-muted mb-4">Generate raw opportunities independently. Aim for volume and variety — extremes matter more than averages.</p>
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">New Idea</h5>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Idea Name</label>
+            <input type="text" name="name" class="form-control" placeholder="e.g. AeroGuard AI" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">One-line Description</label>
+            <textarea name="description" class="form-control" rows="3" placeholder="Brief description of the opportunity or solution..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Submit Idea</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <h6 class="mb-3 text-muted">Your submitted ideas ({{ my_ideas | length }}/10)</h6>
+    {% if my_ideas %}
+      {% for idea in my_ideas %}
+      <div class="card idea-card mb-2">
+        <div class="card-body py-3 d-flex justify-content-between align-items-start gap-3">
+          <div>
+            <strong>{{ idea.name }}</strong>
+            <div class="small text-muted mt-1">{{ idea.description[:120] }}{% if idea.description|length > 120 %}…{% endif %}</div>
+          </div>
+          <div class="text-end flex-shrink-0">
+            <span class="badge bg-light text-dark">{{ idea.num_ratings }} ratings</span>
+            <div class="fw-semibold mt-1">{{ "%.1f"|format(idea.avg_rating) }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">No ideas yet. Start generating.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
