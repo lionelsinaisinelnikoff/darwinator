@@ -3,38 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Darwinator{% endblock %} · Innovation Tournament</title>
+  <title>{% block title %}Darwinator{% endblock %} · NYU Abu Dhabi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     :root {
-      --navy: #0B1C2C;
-      --navy-mid: #142C44;
-      --burgundy: #5C2A4A;
-      --gold: #C4A35A;
-      --cream: #F7F4EF;
-      --muted: #6B7280;
+      /* Official NYU Abu Dhabi brand colors (Brand Guidelines Sept 2023) */
+      --nyu-violet: #57068C;
+      --nyu-violet-dark: #3d0462;
+      --nyu-violet-deeper: #2b0346;
+      --nyu-violet-light: #8a51af;
+      --nyu-violet-pale: #e8e1ea;
+      --black: #000000;
+      --dark-grey: #474645;
+      --charcoal: #7f7f7c;
+      --grey: #bfbebb;
+      --light-grey: #e2e1dd;
+      --accent-oasis: #008ba9;
+      --accent-desert: #ef8b21;
     }
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--cream);
+      background: #faf9f7;
       color: #1a1a1a;
       min-height: 100vh;
     }
-    .navbar { background: var(--navy) !important; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .navbar-brand { font-weight: 700; letter-spacing: -0.03em; font-size: 1.25rem; }
-    .section-title { font-weight: 650; letter-spacing: -0.025em; color: var(--navy); }
-    .card { border: none; border-radius: 14px; box-shadow: 0 1px 3px rgba(11,28,44,0.06), 0 4px 16px rgba(11,28,44,0.04); }
-    .btn-primary { background: var(--navy); border-color: var(--navy); font-weight: 500; }
-    .btn-primary:hover { background: var(--burgundy); border-color: var(--burgundy); }
-    .btn-outline-navy { color: var(--navy); border-color: var(--navy); }
-    .btn-outline-navy:hover { background: var(--navy); color: white; }
-    .idea-card { transition: transform 0.18s ease, box-shadow 0.18s ease; }
-    .idea-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,28,44,0.1); }
-    .stat { font-size: 1.75rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
-    .framework-box { background: linear-gradient(135deg, #f8f1e3 0%, #fff 100%); border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0; }
-    .quiet { font-style: italic; color: var(--muted); }
-    footer { border-top: 1px solid rgba(0,0,0,0.06); }
+    .navbar {
+      background: var(--nyu-violet) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-size: 1.2rem;
+    }
+    .section-title {
+      font-weight: 650;
+      letter-spacing: -0.025em;
+      color: var(--nyu-violet-deeper);
+    }
+    .card {
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 1px 3px rgba(87,6,140,0.06), 0 4px 16px rgba(87,6,140,0.04);
+    }
+    .btn-primary {
+      background: var(--nyu-violet);
+      border-color: var(--nyu-violet);
+      font-weight: 500;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background: var(--nyu-violet-dark);
+      border-color: var(--nyu-violet-dark);
+    }
+    .btn-outline-navy {
+      color: var(--nyu-violet);
+      border-color: var(--nyu-violet);
+    }
+    .btn-outline-navy:hover {
+      background: var(--nyu-violet);
+      color: #fff;
+    }
+    .idea-card {
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .idea-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(87,6,140,0.12);
+    }
+    .stat {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--nyu-violet);
+      line-height: 1.1;
+    }
+    .framework-box {
+      background: linear-gradient(135deg, var(--nyu-violet-pale) 0%, #fff 100%);
+      border-left: 4px solid var(--nyu-violet);
+      border-radius: 0 10px 10px 0;
+    }
+    .quiet {
+      font-style: italic;
+      color: var(--charcoal);
+    }
+    .badge-round {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    footer {
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .progress-bar {
+      background: var(--nyu-violet) !important;
+    }
+    .nyu-wordmark {
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      opacity: 0.9;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -44,14 +111,18 @@
         <i class="bi bi-trophy-fill text-warning"></i>
         <span>DARWINATOR</span>
       </a>
+      <div class="d-none d-md-block text-white nyu-wordmark ms-3">
+        NYU ABU DHABI
+      </div>
       {% if session.get('user_id') %}
-      <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-3 ms-auto">
         <span class="text-white-50 small">{{ session.username }} · {{ session.role }}</span>
         <a href="{{ url_for('logout') }}" class="btn btn-sm btn-outline-light">Sign out</a>
       </div>
       {% endif %}
     </div>
   </nav>
+
   <main class="container py-4 py-md-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -65,12 +136,15 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
+
   <footer class="text-center text-muted py-4 small">
     <div class="container">
-      <div class="mb-1">Darwinator · Hybrid Innovation Tournament</div>
-      <div class="quiet">“Value is driven by the exceptional few. Invest a little to learn a lot.” — Terwiesch & Ulrich</div>
+      <div class="mb-1 fw-medium" style="color: var(--nyu-violet);">Darwinator · NYU Abu Dhabi</div>
+      <div class="quiet">Hybrid Innovation Tournament · Girotra · Terwiesch · Ulrich</div>
+      <div class="mt-1" style="font-size: 0.75rem;">“Value is driven by the exceptional few.”</div>
     </div>
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
