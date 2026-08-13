@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <h1 class="section-title mb-0">Admin Console</h1>
+  <a href="{{ url_for('export') }}" class="btn btn-outline-navy btn-sm">Export CSV</a>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3">
+      <div class="stat">{{ stats.students }}</div>
+      <div class="small text-muted">Students</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3">
+      <div class="stat">{{ stats.ideas_r1 }}</div>
+      <div class="small text-muted">Round 1 Ideas</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3">
+      <div class="stat">{{ stats.evaluations }}</div>
+      <div class="small text-muted">Ratings</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3">
+      <div class="stat">{{ "%.1f"|format(stats.avg_rating) }}</div>
+      <div class="small text-muted">Avg Rating (R1)</div>
+    </div>
+  </div>
+</div>
+<h5 class="mb-3">Top Ideas by Average Rating (Round 1)</h5>
+<div class="table-responsive mb-4">
+  <table class="table table-sm table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Idea</th>
+        <th>Submitter</th>
+        <th class="text-center">Ratings</th>
+        <th class="text-center">Avg</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for idea in top_ideas %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>
+          <strong>{{ idea.name }}</strong>
+          <div class="small text-muted">{{ idea.description[:60] }}{% if idea.description|length > 60 %}…{% endif %}</div>
+        </td>
+        <td><span class="badge bg-light text-dark">{{ idea.submitter }}</span></td>
+        <td class="text-center">{{ idea.num_ratings }}</td>
+        <td class="text-center fw-semibold">{{ "%.2f"|format(idea.avg_rating) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Round Control</h5>
+    <form method="post" action="{{ url_for('advance_round') }}" class="d-flex flex-wrap gap-2 align-items-end">
+      <div>
+        <label class="form-label small">Advance to</label>
+        <select name="new_round" class="form-select">
+          <option value="2">Round 2 — Close R1, open advanced solutions</option>
+          <option value="3">Round 3 — Close R2, ready for team projects</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-danger">Advance Tournament</button>
+    </form>
+    <p class="small text-muted mt-2 mb-0">
+      Current: Round {{ tournament.current_round }} ·
+      R1 open: {{ 'Yes' if tournament.round1_open else 'No' }} ·
+      R2 open: {{ 'Yes' if tournament.round2_open else 'No' }}
+    </p>
+  </div>
+</div>
+{% if round2_solutions %}
+<h5 class="mb-3">Round 2 Solutions</h5>
+<div class="table-responsive">
+  <table class="table table-sm align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Solution</th>
+        <th>Submitter</th>
+        <th class="text-center">Ratings</th>
+        <th class="text-center">Avg</th>
+        <th>Presentation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in round2_solutions %}
+      <tr>
+        <td><strong>{{ s.name }}</strong></td>
+        <td>{{ s.submitter }}</td>
+        <td class="text-center">{{ s.num_ratings }}</td>
+        <td class="text-center">{{ "%.2f"|format(s.avg_rating) }}</td>
+        <td>
+          {% if s.slides_url %}
+          <a href="{{ s.slides_url }}" target="_blank" rel="noopener" class="small">View <i class="bi bi-box-arrow-up-right"></i></a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
