@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}My Reports{% endblock %}
+{% block content %}
+<h1 class="section-title mb-2">My Round 1 Performance</h1>
+<p class="text-muted mb-4">How your ideas performed under group evaluation. The hybrid process rewards both quantity and the ability to generate outliers.</p>
+{% if my_ideas %}
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Idea</th>
+        <th class="text-center"># Ratings</th>
+        <th class="text-center">Avg Score</th>
+        <th class="text-center">Global Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for idea in my_ideas %}
+      <tr>
+        <td>
+          <strong>{{ idea.name }}</strong>
+          <div class="small text-muted">{{ idea.description[:100] }}{% if idea.description|length > 100 %}…{% endif %}</div>
+        </td>
+        <td class="text-center"><span class="badge bg-secondary">{{ idea.num_ratings }}</span></td>
+        <td class="text-center">
+          <span class="fs-5 fw-bold {% if idea.avg_rating >= 7.5 %}text-success{% elif idea.avg_rating >= 6 %}text-warning{% endif %}">
+            {{ "%.2f"|format(idea.avg_rating) }}
+          </span>
+        </td>
+        <td class="text-center">#{{ idea.global_rank or '—' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="framework-box p-3 mt-4">
+  <strong>Insight from the research:</strong>
+  Teams using the hybrid process (individual generation + group evaluation) identify better best ideas
+  because they generate more ideas and higher variance — increasing the probability of true outliers.
+  Pure group brainstorming tends to converge on safer, more average ideas.
+</div>
+{% else %}
+<p class="text-muted">You haven’t submitted ideas yet.</p>
+<a href="{{ url_for('submit') }}" class="btn btn-primary">Submit Ideas</a>
+{% endif %}
+{% endblock %}
