@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5 col-lg-4">
+    <div class="card p-4 p-md-5">
+      <div class="text-center mb-4">
+        <i class="bi bi-trophy-fill display-4" style="color: var(--nyu-violet);"></i>
+        <h1 class="section-title mt-3 mb-1">Darwinator</h1>
+        <p class="text-muted small mb-0">Hybrid Innovation Tournament</p>
+        <p class="small fw-medium mb-0" style="color: var(--nyu-violet);">NYU Abu Dhabi</p>
+        <p class="text-muted small">Girotra · Terwiesch · Ulrich</p>
+      </div>
+      <form method="post">
+        <div class="mb-3">
+          <label class="form-label fw-medium">Username</label>
+          <input type="text" name="username" class="form-control form-control-lg" placeholder="admin or student username" required autofocus>
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-medium">Password</label>
+          <input type="password" name="password" class="form-control form-control-lg" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg w-100">Enter Tournament</button>
+      </form>
+      <div class="text-center mt-4">
+        <a href="{{ url_for('register') }}" class="text-decoration-none small" style="color: var(--nyu-violet);">New participant? Create account →</a>
+      </div>
+    </div>
+    <p class="text-center text-muted small mt-3 mb-0">
+      Demo · Admin: <code>admin / stern2026</code><br>
+      Students: <code>rafiki_mba / demo2026</code> (and others)
+    </p>
+  </div>
+</div>
+{% endblock %}
